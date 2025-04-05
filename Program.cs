@@ -57,16 +57,13 @@ app.Run();
 
 
 
-public static class SeedData
-{
-    public static async Task Initialize(IServiceProvider serviceProvider)
-    {
+public static class SeedData {
+    public static async Task Initialize(IServiceProvider serviceProvider) {
         var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
         // Ensure Admin role exists
-        if (!await roleManager.RoleExistsAsync("Admin"))
-        {
+        if (!await roleManager.RoleExistsAsync("Admin")) {
             await roleManager.CreateAsync(new IdentityRole("Admin"));
         }
 
@@ -75,18 +72,15 @@ public static class SeedData
         string adminPassword = "Admin123!";
 
         var adminUser = await userManager.FindByEmailAsync(adminEmail);
-        if (adminUser == null)
-        {
-            adminUser = new IdentityUser
-            {
+        if (adminUser == null) {
+            adminUser = new IdentityUser {
                 UserName = adminEmail,
                 Email = adminEmail,
                 EmailConfirmed = true
             };
 
             var result = await userManager.CreateAsync(adminUser, adminPassword);
-            if (result.Succeeded)
-            {
+            if (result.Succeeded) {
                 await userManager.AddToRoleAsync(adminUser, "Admin");
             }
         }
