@@ -1,0 +1,33 @@
+@model List<web_dev_assignment.Models.Product>
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@product.Type</h6>
+                    <p class="card-text">@product.Description</p>
+                    <ul class="list-unstyled">
+                        @if (product.Features != null)
+                        {
+                            @foreach (var feature in product.Features)
+                            {
+                                <li>- @feature</li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <p class="card-text">Price: $@product.Price</p>
+                    <p class="card-text">Support: @(product.HasSupport ? "Yes" : "No")</p>
+                    <p class="card-text">Customization: @(product.HasCustomization ? "Yes" : "No")</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
