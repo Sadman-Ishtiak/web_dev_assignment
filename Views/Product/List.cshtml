@@ -1,0 +1,27 @@
+@model List<web_dev_assignment.Models.Product>
+@{
+    ViewData["Title"] = "Products";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var product in Model) {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.Price.ToString("N2")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-itemid="@product.Id">Edit</a>
+                    @* <a asp-action="Delete" asp-route-itemid="@product.Id">Delete</a> *@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

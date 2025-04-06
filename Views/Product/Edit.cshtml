@@ -1,12 +1,12 @@
 @* Views/Product/Create.cshtml *@
 @model web_dev_assignment.Models.Product
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
 <h2>Create Product</h2>
 
-<form asp-action="Create" method="post">
+<form asp-action="Edit" method="post">
     <div class="form-group">
         <label asp-for="Name">Name:</label>
         <input asp-for="Name" class="form-control" />
