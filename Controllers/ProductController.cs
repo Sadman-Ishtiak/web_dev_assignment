@@ -41,9 +41,14 @@ public class ProductController : Controller
     }
     [Authorize(Roles = "Admin")] 
     public async Task<IActionResult> Edit(int id) {
-        var item = _context.Products.FirstOrDefaultAsync(x => x.Id == id);
+        var item = await _context.Products.FindAsync(id);
+        if (item == null)
+        {
+            return NotFound();
+        }
         return View(item);
     }
+
     [HttpPost]
     [Authorize(Roles = "Admin")] 
     public async Task<IActionResult> Edit(int id, [Bind("Name", "Type", "Description", "Price", "featuresString", "HasSupport", "HasCustomization")] Product product) {
