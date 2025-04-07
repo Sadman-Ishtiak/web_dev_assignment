@@ -62,29 +62,57 @@ public class ProductController : Controller
     }
 
     [HttpPost]
-    [Authorize(Roles = "Admin")] 
-    public async Task<IActionResult> Edit(int id, [Bind("Name", "Type", "Description", "Price", "featuresString", "HasSupport", "HasCustomization")] Product product) {
-        if(ModelState.IsValid) {
-            _context.Update(product);
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Edit(
+        int id,
+        [Bind("Name,Type,Description,Price,HasSupport,HasCustomization")] Product updatedProduct,
+        string featuresString)
+    {
+        if (ModelState.IsValid)
+        {
+            var existingProduct = await _context.Products.FindAsync(id);
+            if (existingProduct == null)
+            {
+                return NotFound();
+            }
+
+            // Update the properties
+            existingProduct.Name = updatedProduct.Name;
+            existingProduct.Type = updatedProduct.Type;
+            existingProduct.Description = updatedProduct.Description;
+            existingProduct.Price = updatedProduct.Price;
+            existingProduct.HasSupport = updatedProduct.HasSupport;
+            existingProduct.HasCustomization = updatedProduct.HasCustomization;
+            existingProduct.Features = string.IsNullOrEmpty(featuresString)
+                ? new List<string>()
+                : featuresString.Split(';', StringSplitOptions.RemoveEmptyEntries)
+                                .Select(f => f.Trim())
+                                .ToList();
+
             await _context.SaveChangesAsync();
             return RedirectToAction("List");
         }
-        return View(product);
+
+        ViewBag.FeaturesString = featuresString;
+        return View(updatedProduct);
     }
+
     [Authorize(Roles = "Admin")] 
     public async Task<IActionResult> List() {
         // Example to add a product to the list. Remove in production.
         var items = await _context.Products.ToListAsync();
         return View(items);
     }
-    [HttpPost]
-    [Authorize(Roles = "Admin")] 
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int id) {
         var item = await _context.Products.FindAsync(id);
+        if (item == null)
+            return NotFound();
         return View(item);
     }
-    [Authorize(Roles = "Admin")]
+
     [HttpPost, ActionName("Delete")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         var item = await _context.Products.FindAsync(id);
