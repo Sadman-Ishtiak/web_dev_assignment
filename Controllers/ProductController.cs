@@ -25,22 +25,34 @@ public class ProductController : Controller
     }
 
     [Authorize(Roles = "Admin")] 
-    public IActionResult Create()
-    {
+    public IActionResult Create() {
         return View();
     }
-    [Authorize(Roles = "Admin")] 
     [HttpPost]
-    public async Task<IActionResult> Create([Bind("Name", "Type", "Description", "Price", "featuresString", "HasSupport", "HasCustomization")] Product product) {
-        if(ModelState.IsValid) {
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Create(
+        [Bind("Name,Type,Description,Price,HasSupport,HasCustomization")] Product product,
+        string featuresString)
+    {
+        if (ModelState.IsValid)
+        {
+            product.Features = string.IsNullOrEmpty(featuresString)
+                ? new List<string>()
+                : featuresString.Split(';', StringSplitOptions.RemoveEmptyEntries)
+                                .Select(f => f.Trim())
+                                .ToList();
+
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
             return RedirectToAction("List");
-        } 
+        }
+
+        ViewBag.FeaturesString = featuresString;
         return View(product);
     }
     [Authorize(Roles = "Admin")] 
     public async Task<IActionResult> Edit(int id) {
+        Console.WriteLine("id = ", id);
         var item = await _context.Products.FindAsync(id);
         if (item == null)
         {
@@ -64,5 +76,23 @@ public class ProductController : Controller
         // Example to add a product to the list. Remove in production.
         var items = await _context.Products.ToListAsync();
         return View(items);
+    }
+    [HttpPost]
+    [Authorize(Roles = "Admin")] 
+    public async Task<IActionResult> Delete(int id) {
+        var item = await _context.Products.FindAsync(id);
+        return View(item);
+    }
+    [Authorize(Roles = "Admin")]
+    [HttpPost, ActionName("Delete")]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var item = await _context.Products.FindAsync(id);
+        if(item != null)
+        {
+            _context.Products.Remove(item);
+            await _context.SaveChangesAsync();
+        }
+        return RedirectToAction("Index");
     }
 }
