@@ -1,4 +1,3 @@
-@* Views/Product/Create.cshtml *@
 @model web_dev_assignment.Models.Product
 @{
     ViewData["Title"] = "Edit";
@@ -38,7 +37,7 @@
 
     <div class="form-group">
         <label>Features (Semicolon-separated):</label>
-        <input name="featuresString" class="form-control" value="@string.Join("; ", Model.Features ?? new List<string>())"/>
+        <input name="featuresString" class="form-control" value="@ViewBag.FeaturesString" />
     </div>
 
     <div class="form-group">
@@ -51,5 +50,29 @@
         <input type="checkbox" asp-for="HasCustomization" />
     </div>
 
-    <button type="submit" class="btn btn-primary">Save</button>
+    <div class="form-group">
+        <label asp-for="PurchaseLink">Purchase Link:</label>
+        <input asp-for="PurchaseLink" class="form-control" />
+        <span asp-validation-for="PurchaseLink" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MinimumHardwareRequirements">Minimum Hardware Requirements:</label>
+        <textarea asp-for="MinimumHardwareRequirements" class="form-control"></textarea>
+        <span asp-validation-for="MinimumHardwareRequirements" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="RecommendedHardwareRequirements">Recommended Hardware Requirements:</label>
+        <textarea asp-for="RecommendedHardwareRequirements" class="form-control"></textarea>
+        <span asp-validation-for="RecommendedHardwareRequirements" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SoftwareRequirements">Software Requirements:</label>
+        <textarea asp-for="SoftwareRequirements" class="form-control"></textarea>
+        <span asp-validation-for="SoftwareRequirements" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
 </form>

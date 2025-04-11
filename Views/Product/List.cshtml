@@ -3,23 +3,33 @@
     ViewData["Title"] = "Products";
 }
 
-<table class="table">
-    <thead>
+<h2>Product List</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Type</th>
             <th>Price</th>
+            <th>Support</th>
+            <th>Customization</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        @foreach(var product in Model) {
+        @foreach (var product in Model)
+        {
             <tr>
                 <td>@product.Id</td>
                 <td>@product.Name</td>
-                <td>@product.Price.ToString("N2")</td>
+                <td>@product.Type</td>
+                <td>@product.Price.ToString("C")</td>
+                <td>@(product.HasSupport ? "Yes" : "No")</td>
+                <td>@(product.HasCustomization ? "Yes" : "No")</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@product.Id">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@product.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-sm btn-secondary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-sm btn-danger">Delete</a>
                 </td>
             </tr>
         }

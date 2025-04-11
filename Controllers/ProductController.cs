@@ -28,11 +28,12 @@ public class ProductController : Controller
     public IActionResult Create() {
         return View();
     }
+    
     [HttpPost]
-    [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Create(
-        [Bind("Name,Type,Description,Price,HasSupport,HasCustomization")] Product product,
-        string featuresString)
+[Authorize(Roles = "Admin")]
+public async Task<IActionResult> Create(
+    [Bind("Name,Type,Description,Price,HasSupport,HasCustomization,PurchaseLink,MinimumHardwareRequirements,RecommendedHardwareRequirements,SoftwareRequirements")] Product product,
+    string featuresString)
     {
         if (ModelState.IsValid)
         {
@@ -50,6 +51,8 @@ public class ProductController : Controller
         ViewBag.FeaturesString = featuresString;
         return View(product);
     }
+
+
     [Authorize(Roles = "Admin")] 
     public async Task<IActionResult> Edit(int id) {
         Console.WriteLine("id = ", id);
@@ -65,7 +68,7 @@ public class ProductController : Controller
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Edit(
         int id,
-        [Bind("Name,Type,Description,Price,HasSupport,HasCustomization")] Product updatedProduct,
+        [Bind("Name,Type,Description,Price,HasSupport,HasCustomization,PurchaseLink,MinimumHardwareRequirements,RecommendedHardwareRequirements,SoftwareRequirements")] Product updatedProduct,
         string featuresString)
     {
         if (ModelState.IsValid)
@@ -88,6 +91,9 @@ public class ProductController : Controller
                 : featuresString.Split(';', StringSplitOptions.RemoveEmptyEntries)
                                 .Select(f => f.Trim())
                                 .ToList();
+            existingProduct.MinimumHardwareRequirements = updatedProduct.MinimumHardwareRequirements;
+            existingProduct.RecommendedHardwareRequirements = updatedProduct.RecommendedHardwareRequirements;
+            existingProduct.SoftwareRequirements = updatedProduct.SoftwareRequirements;
 
             await _context.SaveChangesAsync();
             return RedirectToAction("List");
