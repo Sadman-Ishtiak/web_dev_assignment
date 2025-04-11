@@ -2,7 +2,9 @@
 @{
     ViewData["Title"] = "Products";
 }
-
+<p>
+    @User.ToString()
+</p>
 <div class="row">
     @foreach (var product in Model)
     {
