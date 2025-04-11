@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using web_dev_assignment.Data;
+using web_dev_assignment.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>() // 👈 This enables roles
     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -60,7 +61,7 @@ app.Run();
 public static class SeedData {
     public static async Task Initialize(IServiceProvider serviceProvider) {
         var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-        var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+        var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
         // Ensure Admin role exists
         if (!await roleManager.RoleExistsAsync("Admin")) {
@@ -73,7 +74,7 @@ public static class SeedData {
 
         var adminUser = await userManager.FindByEmailAsync(adminEmail);
         if (adminUser == null) {
-            adminUser = new IdentityUser {
+            adminUser = new ApplicationUser {
                 UserName = adminEmail,
                 Email = adminEmail,
                 EmailConfirmed = true

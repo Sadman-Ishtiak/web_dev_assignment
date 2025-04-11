@@ -4,7 +4,7 @@ using web_dev_assignment.Models;
 
 namespace web_dev_assignment.Data;
 
-public class ApplicationDbContext : IdentityDbContext
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)

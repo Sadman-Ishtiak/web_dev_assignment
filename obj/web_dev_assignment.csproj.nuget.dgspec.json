@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\code\\Project\\web_dev_assignment\\web_dev_assignment.csproj": {}
+    "D:\\code\\Project\\web_dev_assignment\\web_dev_assignment.csproj": {}
   },
   "projects": {
-    "d:\\code\\Project\\web_dev_assignment\\web_dev_assignment.csproj": {
+    "D:\\code\\Project\\web_dev_assignment\\web_dev_assignment.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\code\\Project\\web_dev_assignment\\web_dev_assignment.csproj",
+        "projectUniqueName": "D:\\code\\Project\\web_dev_assignment\\web_dev_assignment.csproj",
         "projectName": "web_dev_assignment",
-        "projectPath": "d:\\code\\Project\\web_dev_assignment\\web_dev_assignment.csproj",
+        "projectPath": "D:\\code\\Project\\web_dev_assignment\\web_dev_assignment.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "d:\\code\\Project\\web_dev_assignment\\obj\\",
+        "outputPath": "D:\\code\\Project\\web_dev_assignment\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config"
