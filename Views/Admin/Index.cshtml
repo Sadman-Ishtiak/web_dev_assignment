@@ -4,11 +4,27 @@
 
 <div class="text-center">
     <h1 class="display-4">Admin Panel</h1>
-    <p>This is the Admin Panel. Please be careful of what you do in this page to avoid making any mistake in the database and to keep the program in a normal form.</p>
-    <p>
-        <a asp-area="" asp-controller="Product" asp-action="List"> The List </a>
-    </p>
-    <p>
-        <a asp-area="" asp-controller="Product" asp-action="Create"> Create </a>
-    </p>
+    <p>This is the Admin Panel. Please be careful of what you do in this page to avoid making any mistake in the database and to keep the program in a normal form. There are two panels for admins -</p>
+    <table width="100%">
+        <tr>
+            <th>Sl. No.</th>
+            <th>Task</th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>The Product List</td>
+            <td>
+                <a asp-area="" asp-controller="Product" asp-action="List" class="btn btn-primary"> The List </a>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>1</td>
+            <td>Add new Products to the list</td>
+            <td>
+                <a asp-area="" asp-controller="Product" asp-action="Create" class="btn btn-primary"> Create </a>
+            </td>
+        </tr>
+    </table>
 </div>
