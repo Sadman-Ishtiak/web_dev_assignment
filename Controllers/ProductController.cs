@@ -61,6 +61,7 @@ public async Task<IActionResult> Create(
         {
             return NotFound();
         }
+        ViewBag.FeaturesString = string.Join(";", item.Features ?? new List<string>());
         return View(item);
     }
 
